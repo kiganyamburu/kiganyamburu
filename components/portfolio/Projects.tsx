@@ -46,8 +46,8 @@ const projects = [
     description:
       "3D interactive portfolio built with Three.js and React, featuring smooth animations and modern design.",
     technologies: ["React", "Three.js", "Framer Motion", "Vite"],
-    liveUrl: "#",
-    githubUrl: "#",
+    liveUrl: "https://kiganyamburu.vercel.app/",
+    githubUrl: "https://github.com/kiganyamburu/kiganyamburu",
     image:
       "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=400&fit=crop",
     featured: false,
