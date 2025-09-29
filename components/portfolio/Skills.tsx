@@ -27,6 +27,8 @@ const skills = [
       "Node.js",
       "Express",
       "Python",
+      "Django",
+      "Flask",
       "FastAPI",
       "PostgreSQL",
       "MongoDB",
