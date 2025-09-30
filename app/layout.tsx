@@ -17,7 +17,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Peter Mburu Portfolio",
-  description: "Welcome to my portfolio website. I'm Peter Mburu, a passionate software developer specializing in building web applications. Explore my projects, skills, and experience in the world of technology.",
+  description:
+    "Welcome to my portfolio website. I'm Peter Mburu, a passionate software developer specializing in building web applications. Explore my projects, skills, and experience in the world of technology.",
 };
 
 export default function RootLayout({
@@ -29,6 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning={true}
       >
         <ThemeProvider
           attribute="class"
