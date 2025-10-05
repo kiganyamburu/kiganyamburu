@@ -27,8 +27,7 @@ const allProjects = [
     category: "Web App",
     liveUrl: "https://pichsafe.com/",
     githubUrl: "#",
-    image:
-      "https://images.unsplash.com/photo-1503602642458-232111445657?w=600&h=400&fit=crop",
+    image: "/pichsafe.png",
     featured: true,
     year: "2025",
   },
