@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,17 @@ import Link from "next/link";
 import Image from "next/image";
 
 const projects = [
+  {
+    title: "Pichsafe",
+    description:
+      "Secure image hosting platform with private sharing, expiring links, and simple management toPich & Safe Consultancy Ltd is a Kenyan-based ICT solutions company offering expert services in software development, networking, hardware support, and digital transformation..",
+    technologies: ["Next.js", "TypeScript", "Vercel", "Cloudinary"],
+    liveUrl: "https://pichsafe.com/",
+    githubUrl: "#",
+    image:
+      "https://images.unsplash.com/photo-1503602642458-232111445657?w=600&h=400&fit=crop",
+    featured: true,
+  },
   {
     title: "E-Commerce Platform",
     description:

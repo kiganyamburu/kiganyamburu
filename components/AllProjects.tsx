@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,19 @@ import Link from "next/link";
 import Image from "next/image";
 
 const allProjects = [
+  {
+    title: "Pichsafe",
+    description:
+      "Secure image hosting platform with private sharing, expiring links, and simple management tools.",
+    technologies: ["Next.js", "TypeScript", "Vercel", "Cloudinary"],
+    category: "Web App",
+    liveUrl: "https://pichsafe.com/",
+    githubUrl: "#",
+    image:
+      "https://images.unsplash.com/photo-1503602642458-232111445657?w=600&h=400&fit=crop",
+    featured: true,
+    year: "2025",
+  },
   {
     title: "E-Commerce Platform",
     description:
@@ -174,7 +187,7 @@ export default function AllProjects() {
         project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
         project.technologies.some((tech) =>
-          tech.toLowerCase().includes(searchTerm.toLowerCase()),
+          tech.toLowerCase().includes(searchTerm.toLowerCase())
         );
       const matchesCategory =
         selectedCategory === "All" || project.category === selectedCategory;
