@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Code, Lightbulb, Rocket, Users, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { downloadFile } from "@/lib/download";
 
@@ -44,7 +44,7 @@ export default function About() {
   const [isDownloading, setIsDownloading] = useState(false);
   const { toast } = useToast();
 
-  const handleDownloadCV = async (e?: React.MouseEvent) => {
+  const handleDownloadCV = useCallback(async (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
     setIsDownloading(true);
 
@@ -82,7 +82,7 @@ export default function About() {
     } finally {
       setIsDownloading(false);
     }
-  };
+  }, [toast]);
 
   // Optional: Add keyboard shortcut for CV download (Ctrl+D)
   useEffect(() => {
