@@ -1,10 +1,40 @@
-'use client';
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, Download } from "lucide-react";
 import { motion } from "framer-motion";
+import { downloadFile } from "@/lib/download";
+import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 export default function Hero() {
+  const [isDownloading, setIsDownloading] = useState(false);
+  const { toast } = useToast();
+
+  const handleDownloadCV = async () => {
+    setIsDownloading(true);
+
+    try {
+      const success = await downloadFile("/cv.pdf", "Peter_Mburu_CV.pdf");
+      if (success) {
+        toast({
+          title: "Download Started",
+          description: "Your CV download has begun successfully.",
+        });
+      } else {
+        throw new Error("Direct download failed");
+      }
+    } catch (error) {
+      console.error("Download error:", error);
+      toast({
+        title: "Download Failed",
+        description: "There was an error downloading the CV. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsDownloading(false);
+    }
+  };
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6 z-10">
       <div className="max-w-4xl mx-auto text-center">
@@ -58,9 +88,15 @@ export default function Hero() {
               <Mail className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
               Get In Touch
             </Button>
-            <Button variant="outline" size="lg" className="group">
+            <Button
+              variant="outline"
+              size="lg"
+              className="group"
+              onClick={handleDownloadCV}
+              disabled={isDownloading}
+            >
               <Download className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-              Download CV
+              {isDownloading ? "Downloading..." : "Download CV"}
             </Button>
           </motion.div>
 
@@ -71,8 +107,16 @@ export default function Hero() {
             className="flex justify-center gap-6 pt-8"
           >
             {[
-              { icon: Github, href: "https://github.com/kiganyamburu", label: "GitHub" },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/kiganya-mburu-53a7b5231/", label: "LinkedIn" },
+              {
+                icon: Github,
+                href: "https://github.com/kiganyamburu",
+                label: "GitHub",
+              },
+              {
+                icon: Linkedin,
+                href: "https://www.linkedin.com/in/kiganya-mburu-53a7b5231/",
+                label: "LinkedIn",
+              },
               { icon: Mail, href: "", label: "Email" },
             ].map(({ icon: Icon, href, label }) => (
               <a
