@@ -95,7 +95,7 @@ export default function About() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isDownloading]);
+  }, [isDownloading, handleDownloadCV]);
 
   return (
     <section className="py-24 px-6 relative">
@@ -135,9 +135,9 @@ export default function About() {
               passion for crafting exceptional digital experiences.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              When I&rsquo;m not coding, you&rsquo;ll find me exploring new technologies,
-              contributing to open-source projects, or sharing knowledge with
-              the developer community.
+              When I&rsquo;m not coding, you&rsquo;ll find me exploring new
+              technologies, contributing to open-source projects, or sharing
+              knowledge with the developer community.
             </p>
             <div className="flex flex-wrap gap-2">
               {[
@@ -191,9 +191,9 @@ export default function About() {
             Let&rsquo;s Build Something Amazing
           </h3>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Whether you&rsquo;re a startup looking to build your MVP or an established
-            company seeking to modernize your tech stack, I&rsquo;m here to help bring
-            your vision to life.
+            Whether you&rsquo;re a startup looking to build your MVP or an
+            established company seeking to modernize your tech stack, I&rsquo;m
+            here to help bring your vision to life.
           </p>
           <Button
             onClick={handleDownloadCV}
