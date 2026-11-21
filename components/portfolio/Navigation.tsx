@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -40,14 +40,15 @@ export default function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <motion.div
+          <motion.a
+            href="#home"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
+            className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hover:opacity-90 transition-opacity"
           >
-            Portfolio
-          </motion.div>
+            Peter Mburu
+          </motion.a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
@@ -68,8 +69,8 @@ export default function Navigation() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.7 }}
             >
-              <Button size="sm" className="bg-primary hover:bg-primary/90">
-                Hire Me
+              <Button size="sm" className="bg-primary hover:bg-primary/90" asChild>
+                <a href="#contact">Hire Me</a>
               </Button>
             </motion.div>
             <motion.div
@@ -87,6 +88,7 @@ export default function Navigation() {
               variant="ghost"
               size="sm"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? (
                 <X className="w-5 h-5" />
@@ -116,13 +118,18 @@ export default function Navigation() {
                   {item.name}
                 </a>
               ))}
-              <Button
-                size="sm"
-                className="bg-primary hover:bg-primary/90 w-fit"
-              >
-                Hire Me
-              </Button>
-              <ModeToggle />
+              <div className="flex items-center justify-between pt-2">
+                <Button
+                  size="sm"
+                  className="bg-primary hover:bg-primary/90"
+                  asChild
+                >
+                  <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+                    Hire Me
+                  </a>
+                </Button>
+                <ModeToggle />
+              </div>
             </div>
           </motion.div>
         )}

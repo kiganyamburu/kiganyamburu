@@ -1,6 +1,4 @@
 "use client";
-// disable eslint here to allow any
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
@@ -9,82 +7,74 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect, useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { downloadFile } from "@/lib/download";
+import { HIGHLIGHTS, STATS, PERSONAL_INFO } from "@/lib/portfolio-data";
 
-// Type for gtag if using Google Analytics
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
+    gtag?: (
+      command: "event" | "config" | "set" | "js",
+      targetId: string,
+      config?: Record<string, unknown>
+    ) => void;
   }
 }
 
-const highlights = [
-  {
-    icon: Code,
-    title: "Clean Code",
-    description: "Writing maintainable, scalable, and well-documented code",
-  },
-  {
-    icon: Lightbulb,
-    title: "Problem Solving",
-    description: "Creative solutions to complex technical challenges",
-  },
-  {
-    icon: Rocket,
-    title: "Performance",
-    description: "Optimized applications with exceptional user experience",
-  },
-  {
-    icon: Users,
-    title: "Collaboration",
-    description: "Working effectively with teams and stakeholders",
-  },
-];
+const highlightIconMap = {
+  Code,
+  Lightbulb,
+  Rocket,
+  Users,
+};
 
 export default function About() {
   const [isDownloading, setIsDownloading] = useState(false);
   const { toast } = useToast();
 
-  const handleDownloadCV = useCallback(async (e?: React.MouseEvent) => {
-    if (e) e.preventDefault();
-    setIsDownloading(true);
+  const handleDownloadCV = useCallback(
+    async (e?: React.MouseEvent) => {
+      if (e) e.preventDefault();
+      setIsDownloading(true);
 
-    // Track download event
-    try {
-      // You can replace this with your analytics tracking
-      if (typeof window !== "undefined" && window.gtag) {
-        window.gtag("event", "download", {
-          event_category: "engagement",
-          event_label: "CV Download",
-        });
+      // Track download event
+      try {
+        if (typeof window !== "undefined" && window.gtag) {
+          window.gtag("event", "download", {
+            event_category: "engagement",
+            event_label: "CV Download",
+          });
+        }
+      } catch (analyticsError) {
+        console.warn("Analytics tracking failed:", analyticsError);
       }
-    } catch (analyticsError) {
-      // Analytics shouldn't break the download
-      console.log("Analytics tracking failed:", analyticsError);
-    }
 
-    try {
-      const success = await downloadFile("/cv.pdf", "Portfolio_CV.pdf");
-      if (success) {
+      try {
+        const success = await downloadFile(
+          PERSONAL_INFO.cvPath,
+          PERSONAL_INFO.cvFileName
+        );
+        if (success) {
+          toast({
+            title: "Download Started",
+            description: "Your CV download has begun successfully.",
+          });
+        } else {
+          throw new Error("Direct download failed");
+        }
+      } catch (error) {
+        console.error("Download error:", error);
         toast({
-          title: "Download Started",
-          description: "Your CV download has begun successfully.",
+          title: "Download Failed",
+          description: "There was an error downloading the CV. Please try again.",
+          variant: "destructive",
         });
-      } else {
-        throw new Error("Direct download failed");
+      } finally {
+        setIsDownloading(false);
       }
-    } catch (error) {
-      console.error("Download error:", error);
-      toast({
-        title: "Download Failed",
-        description: "There was an error downloading the CV. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsDownloading(false);
-    }
-  }, [toast]);
+    },
+    [toast]
+  );
 
-  // Optional: Add keyboard shortcut for CV download (Ctrl+D)
+  // Keyboard shortcut for CV download (Ctrl+D)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.ctrlKey && event.key === "d" && !isDownloading) {
@@ -161,22 +151,25 @@ export default function About() {
             viewport={{ once: true }}
             className="grid grid-cols-2 gap-6"
           >
-            {highlights.map((highlight, index) => (
-              <motion.div
-                key={highlight.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 transition-all duration-300 group"
-              >
-                <highlight.icon className="w-8 h-8 text-primary mb-4 group-hover:scale-110 transition-transform" />
-                <h3 className="font-semibold mb-2">{highlight.title}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {highlight.description}
-                </p>
-              </motion.div>
-            ))}
+            {HIGHLIGHTS.map((highlight, index) => {
+              const Icon = highlightIconMap[highlight.iconName];
+              return (
+                <motion.div
+                  key={highlight.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-card border border-border rounded-xl p-6 hover:border-primary/30 transition-all duration-300 group"
+                >
+                  <Icon className="w-8 h-8 text-primary mb-4 group-hover:scale-110 transition-transform" />
+                  <h3 className="font-semibold mb-2">{highlight.title}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {highlight.description}
+                  </p>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
 
@@ -212,11 +205,7 @@ export default function About() {
             {isDownloading ? "Downloading..." : "Download CV"}
           </Button>
           <div className="grid md:grid-cols-3 gap-6 max-w-2xl mx-auto">
-            {[
-              { number: "50+", label: "Projects Completed" },
-              { number: "3+", label: "Years Experience" },
-              { number: "100%", label: "Client Satisfaction" },
-            ].map((stat) => (
+            {STATS.map((stat) => (
               <div key={stat.label} className="text-center">
                 <div className="text-3xl font-bold text-primary mb-2">
                   {stat.number}

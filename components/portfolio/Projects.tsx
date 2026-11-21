@@ -6,55 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-
-const projects = [
-  {
-    title: "E-Commerce Platform",
-    description:
-      "Full-stack e-commerce solution with React, Node.js, and PostgreSQL. Features include real-time inventory, payment processing, and admin dashboard.",
-    technologies: ["React", "Node.js", "PostgreSQL", "Stripe", "Redis"],
-    liveUrl: "#",
-    githubUrl: "https://github.com/kiganyamburu/commerce-vista-spark",
-    image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
-    featured: true,
-  },
-  {
-    title: "Task Management App",
-    description:
-      "Collaborative project management tool with real-time updates, drag-and-drop interface, and team collaboration features.",
-    technologies: ["Next.js", "TypeScript", "Prisma", "WebSockets"],
-    liveUrl: "#",
-    githubUrl: "https://github.com/kiganyamburu/zest-team-tasks",
-    image:
-      "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=400&fit=crop",
-    featured: true,
-  },
-  {
-    title: "AI Chat Interface",
-    description:
-      "Modern chat application with AI integration, real-time messaging, and beautiful UI components.",
-    technologies: ["React", "OpenAI API", "Socket.io", "TailwindCSS"],
-    liveUrl: "#",
-    githubUrl: "#",
-    image:
-      "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
-    featured: false,
-  },
-  {
-    title: "Portfolio Website",
-    description:
-      "3D interactive portfolio built with Three.js and React, featuring smooth animations and modern design.",
-    technologies: ["React", "Three.js", "Framer Motion", "Vite"],
-    liveUrl: "https://kiganyamburu.vercel.app/",
-    githubUrl: "https://github.com/kiganyamburu/kiganyamburu",
-    image:
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=400&fit=crop",
-    featured: false,
-  },
-];
+import { PROJECTS } from "@/lib/portfolio-data";
 
 export default function Projects() {
+  const featuredProjects = PROJECTS.filter((project) => project.featured);
+
   return (
     <section className="py-24 px-6 relative">
       <div className="max-w-7xl mx-auto">
@@ -75,37 +31,36 @@ export default function Projects() {
         </motion.div>
 
         <div className="grid gap-8">
-          {projects.map((project, index) => (
+          {featuredProjects.map((project, index) => (
             <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              transition={{ duration: 0.8, delay: index * 0.15 }}
               viewport={{ once: true }}
-              className={`group relative ${
-                project.featured
-                  ? "lg:grid lg:grid-cols-2 lg:gap-8"
-                  : "max-w-md mx-auto lg:max-w-none lg:mx-0"
-              }`}
+              className="group relative lg:grid lg:grid-cols-2 lg:gap-8 bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5"
             >
-              <div className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5">
-                <div className="relative overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={500}
-                    height={200}
-                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
+              <div className="relative overflow-hidden min-h-[260px] lg:min-h-full">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  width={600}
+                  height={400}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <Badge className="absolute top-4 left-4 bg-primary/90 text-primary-foreground">
+                  {project.year}
+                </Badge>
+              </div>
 
-                <div className="p-8">
-                  {project.featured && (
-                    <Badge className="mb-4 bg-primary/10 text-primary hover:bg-primary/20">
-                      Featured Project
+              <div className="p-8 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <Badge className="bg-primary/10 text-primary hover:bg-primary/20">
+                      {project.category}
                     </Badge>
-                  )}
+                  </div>
 
                   <h3 className="text-2xl font-bold mb-4 group-hover:text-primary transition-colors">
                     {project.title}
@@ -122,26 +77,59 @@ export default function Projects() {
                       </Badge>
                     ))}
                   </div>
+                </div>
 
-                  <div className="flex gap-4">
+                <div className="flex gap-4 pt-4 border-t border-border/50">
+                  {project.liveUrl && project.liveUrl !== "#" ? (
+                    <Button size="sm" className="group/btn" asChild>
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2 group-hover/btn:scale-110 transition-transform" />
+                        Live Demo
+                      </a>
+                    </Button>
+                  ) : (
                     <Button
                       size="sm"
-                      className="group/btn"
-                      onClick={() => window.open(project.liveUrl, "_blank")}
+                      variant="secondary"
+                      disabled
+                      className="opacity-60 cursor-not-allowed"
                     >
-                      <ExternalLink className="w-4 h-4 mr-2 group-hover/btn:scale-110 transition-transform" />
-                      Live Demo
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Demo Soon
                     </Button>
+                  )}
+
+                  {project.githubUrl && project.githubUrl !== "#" ? (
                     <Button
                       size="sm"
                       variant="outline"
                       className="group/btn"
-                      onClick={() => window.open(project.githubUrl, "_blank")}
+                      asChild
                     >
-                      <Github className="w-4 h-4 mr-2 group-hover/btn:scale-110 transition-transform" />
-                      Code
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Github className="w-4 h-4 mr-2 group-hover/btn:scale-110 transition-transform" />
+                        Code
+                      </a>
                     </Button>
-                  </div>
+                  ) : (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      disabled
+                      className="opacity-50 cursor-not-allowed"
+                    >
+                      <Github className="w-4 h-4 mr-2" />
+                      Private
+                    </Button>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -157,7 +145,7 @@ export default function Projects() {
         >
           <Button size="lg" variant="outline" className="group" asChild>
             <Link href="/projects">
-              View All Projects
+              View All Projects ({PROJECTS.length})
               <ExternalLink className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform" />
             </Link>
           </Button>

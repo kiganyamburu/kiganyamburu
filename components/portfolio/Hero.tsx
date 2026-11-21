@@ -1,11 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, Download } from "lucide-react";
+import { Github, Linkedin, Mail, Twitter, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import { downloadFile } from "@/lib/download";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { PERSONAL_INFO, SOCIAL_LINKS } from "@/lib/portfolio-data";
+
+const iconMap = {
+  Github,
+  Linkedin,
+  Mail,
+  Twitter,
+};
 
 export default function Hero() {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -15,7 +23,10 @@ export default function Hero() {
     setIsDownloading(true);
 
     try {
-      const success = await downloadFile("/cv.pdf", "Peter_Mburu_CV.pdf");
+      const success = await downloadFile(
+        PERSONAL_INFO.cvPath,
+        PERSONAL_INFO.cvFileName
+      );
       if (success) {
         toast({
           title: "Download Started",
@@ -35,6 +46,7 @@ export default function Hero() {
       setIsDownloading(false);
     }
   };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6 z-10">
       <div className="max-w-4xl mx-auto text-center">
@@ -50,7 +62,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6"
           >
-            <span className="w-2 h-2 bg-primary rounded-full mr-2 animate-pulse"></span>
+            <span className="w-2 h-2 bg-primary rounded-full mr-2 animate-pulse" />
             Available for work
           </motion.div>
 
@@ -73,9 +85,7 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
           >
-            I craft exceptional digital experiences through code, combining
-            modern technologies with creative problem-solving to build scalable
-            applications.
+            {PERSONAL_INFO.tagline}
           </motion.p>
 
           <motion.div
@@ -84,9 +94,11 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8"
           >
-            <Button size="lg" className="bg-primary hover:bg-primary/90 group">
-              <Mail className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-              Get In Touch
+            <Button size="lg" className="bg-primary hover:bg-primary/90 group" asChild>
+              <a href="#contact">
+                <Mail className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                Get In Touch
+              </a>
             </Button>
             <Button
               variant="outline"
@@ -106,28 +118,21 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 1 }}
             className="flex justify-center gap-6 pt-8"
           >
-            {[
-              {
-                icon: Github,
-                href: "https://github.com/kiganyamburu",
-                label: "GitHub",
-              },
-              {
-                icon: Linkedin,
-                href: "https://www.linkedin.com/in/kiganya-mburu-53a7b5231/",
-                label: "LinkedIn",
-              },
-              { icon: Mail, href: "", label: "Email" },
-            ].map(({ icon: Icon, href, label }) => (
-              <a
-                key={label}
-                href={href}
-                className="p-3 rounded-full bg-card hover:bg-primary/10 border border-border hover:border-primary/30 transition-all duration-300 group"
-                aria-label={label}
-              >
-                <Icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-              </a>
-            ))}
+            {SOCIAL_LINKS.map(({ name, href, iconName }) => {
+              const Icon = iconMap[iconName];
+              const isExternal = href.startsWith("http");
+              return (
+                <a
+                  key={name}
+                  href={href}
+                  className="p-3 rounded-full bg-card hover:bg-primary/10 border border-border hover:border-primary/30 transition-all duration-300 group"
+                  aria-label={name}
+                  {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                >
+                  <Icon className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </a>
+              );
+            })}
           </motion.div>
         </motion.div>
       </div>
