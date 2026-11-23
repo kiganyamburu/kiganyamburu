@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
@@ -17,6 +19,15 @@ const navItems = [
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
+  const getHref = (href: string) => {
+    if (isHomePage) {
+      return href;
+    }
+    return href === "#home" ? "/" : `/${href}`;
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +37,20 @@ export default function Navigation() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // When landing on a page with a hash from another route, scroll to the section
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash) {
+      const targetId = window.location.hash.replace("#", "");
+      const elem = document.getElementById(targetId);
+      if (elem) {
+        const timer = setTimeout(() => {
+          elem.scrollIntoView({ behavior: "smooth" });
+        }, 150);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [pathname]);
 
   return (
     <motion.nav
@@ -40,29 +65,29 @@ export default function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <motion.a
-            href="#home"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+          <Link
+            href="/"
             className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent hover:opacity-90 transition-opacity"
           >
             Peter Mburu
-          </motion.a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item, index) => (
-              <motion.a
+              <motion.div
                 key={item.name}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 + index * 0.1 }}
-                href={item.href}
-                className="text-muted-foreground hover:text-primary transition-colors duration-300 font-medium"
               >
-                {item.name}
-              </motion.a>
+                <Link
+                  href={getHref(item.href)}
+                  className="text-muted-foreground hover:text-primary transition-colors duration-300 font-medium"
+                >
+                  {item.name}
+                </Link>
+              </motion.div>
             ))}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
@@ -70,7 +95,7 @@ export default function Navigation() {
               transition={{ duration: 0.8, delay: 0.7 }}
             >
               <Button size="sm" className="bg-primary hover:bg-primary/90" asChild>
-                <a href="#contact">Hire Me</a>
+                <Link href={isHomePage ? "#contact" : "/#contact"}>Hire Me</Link>
               </Button>
             </motion.div>
             <motion.div
@@ -109,14 +134,14 @@ export default function Navigation() {
           >
             <div className="flex flex-col gap-4">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
+                  href={getHref(item.href)}
                   className="text-muted-foreground hover:text-primary transition-colors duration-300 font-medium"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
               <div className="flex items-center justify-between pt-2">
                 <Button
@@ -124,9 +149,12 @@ export default function Navigation() {
                   className="bg-primary hover:bg-primary/90"
                   asChild
                 >
-                  <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link
+                    href={isHomePage ? "#contact" : "/#contact"}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
                     Hire Me
-                  </a>
+                  </Link>
                 </Button>
                 <ModeToggle />
               </div>
