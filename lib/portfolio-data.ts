@@ -208,15 +208,15 @@ export const PROJECTS: Project[] = [
     year: "2024",
   },
   {
-    title: "E-Commerce Platform",
+    title: "VerseFinder",
     description:
-      "Full-stack e-commerce solution with React, Node.js, and PostgreSQL. Features include real-time inventory, payment processing, and admin dashboard.",
+      "VerseFinder is a Bible application that allows users to search for Bible verses and find rhymes for those verses.",
     technologies: ["React", "Node.js", "PostgreSQL", "Stripe", "Redis"],
     category: "Full Stack",
-    liveUrl: "#",
-    githubUrl: "https://github.com/kiganyamburu/commerce-vista-spark",
+    liveUrl: "https://verse-whisper-finder.vercel.app/",
+    githubUrl: "https://github.com/kiganyamburu/verse-whisper-finder",
     image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1787154474650-677e13dd4028?w=600&h=400&fit=crop",
     featured: true,
     year: "2024",
   },
