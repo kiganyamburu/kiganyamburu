@@ -40,7 +40,7 @@ export const PERSONAL_INFO = {
   email: "mburukiganya@gmail.com",
   cvFileName: "Peter_Mburu_CV.pdf",
   cvPath: "/cv.pdf",
-  bio: "I'm a passionate full-stack developer with 3+ years of experience creating digital solutions that make a difference. I love turning complex problems into simple, beautiful, and intuitive designs.",
+  bio: "I'm a passionate full-stack developer with 5+ years of experience creating digital solutions that make a difference. I love turning complex problems into simple, beautiful, and intuitive designs.",
   tagline: "I craft exceptional digital experiences through code, combining modern technologies with creative problem-solving to build scalable applications.",
 };
 
@@ -92,7 +92,7 @@ export const HIGHLIGHTS: Highlight[] = [
 
 export const STATS: Stat[] = [
   { number: "50+", label: "Projects Completed" },
-  { number: "3+", label: "Years Experience" },
+  { number: "5+", label: "Years Experience" },
   { number: "100%", label: "Client Satisfaction" },
 ];
 
@@ -218,20 +218,20 @@ export const PROJECTS: Project[] = [
     image:
       "https://images.unsplash.com/photo-1787154474650-677e13dd4028?w=600&h=400&fit=crop",
     featured: true,
-    year: "2024",
+    year: "2025",
   },
   {
-    title: "Task Management App",
+    title: "BrandLink",
     description:
-      "Collaborative project management tool with real-time updates, drag-and-drop interface, and team collaboration features.",
+      "Collaborate with Confidence A centralized marketplace for campaign discovery and transparent influencer partnerships..",
     technologies: ["Next.js", "TypeScript", "Prisma", "WebSockets"],
     category: "Web App",
-    liveUrl: "#",
-    githubUrl: "https://github.com/kiganyamburu/zest-team-tasks",
+    liveUrl: "https://brandlink-kappa.vercel.app/home",
+    githubUrl: "https://github.com/kiganyamburu/brandlink",
     image:
-      "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=400&fit=crop",
+      "https://plus.unsplash.com/premium_photo-1754792065314-1c32dc5b6f18?w=600&h=400&fit=crop",
     featured: true,
-    year: "2024",
+    year: "2025",
   },
   {
     title: "Portfolio Website",
@@ -247,17 +247,17 @@ export const PROJECTS: Project[] = [
     year: "2024",
   },
   {
-    title: "AI Chat Interface",
+    title: "EPL Season Predictor",
     description:
-      "Modern chat application with AI integration, real-time messaging, and beautiful UI components.",
-    technologies: ["React", "OpenAI API", "Socket.io", "TailwindCSS"],
+      "A production-grade sports analytics and probabilistic forecasting system for the 2026/27 English Premier League (EPL) season. Combining a time-discounted bivariate Dixon-Coles Poisson model blended with Expected Goals (xG), a gradient-boosted XGBoost classifier engineered with 13 match-level signals, dynamic out-of-sample temperature calibration, and a 10,000-iteration state-aware Monte Carlo simulation engine.",
+    technologies: ["Python", "Streamlit", "XGBoost", "SciPy", "NumPy", "Pandas"],
     category: "AI/ML",
     liveUrl: "#",
-    githubUrl: "https://github.com/kiganyamburu/chatter-ai-wave",
+    githubUrl: "https://github.com/kiganyamburu/EPL-Season-Predictor",
     image:
-      "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1776078599028-561fe388ceed?w=600&h=400&fit=crop",
     featured: false,
-    year: "2024",
+    year: "2026",
   },
   {
     title: "Weather Dashboard",
