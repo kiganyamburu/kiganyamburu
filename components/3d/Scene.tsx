@@ -50,10 +50,10 @@ function FloatingObject({
         }
       >
         <meshStandardMaterial
-          color={`hsl(${262}, 80%, ${60 + Math.sin(Date.now() * 0.001) * 10}%)`}
+          color="hsl(262, 80%, 60%)"
           metalness={0.8}
           roughness={0.2}
-          emissive={`hsl(${262}, 80%, 30%)`}
+          emissive="hsl(262, 80%, 30%)"
           emissiveIntensity={0.2}
         />
       </GeometryComponent>
