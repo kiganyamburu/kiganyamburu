@@ -260,17 +260,17 @@ export const PROJECTS: Project[] = [
     year: "2026",
   },
   {
-    title: "Weather Dashboard",
+    title: "Glow&Go",
     description:
-      "Real-time weather application with interactive maps, forecasts, and location-based services.",
-    technologies: ["Vue.js", "Weather API", "Mapbox", "Chart.js"],
-    category: "Web App",
-    liveUrl: "#",
-    githubUrl: "#",
+      "Glow & Go Lash + Wax Spa in Ruaka. Hand-mapped cluster sets, featherweight individual extensions, and indulgent eye-framing rituals tailored to harmonize with your natural eye curvature.",
+    technologies: ["React Native", "TypeScript", "Firebase"],
+    category: "Mobile App",
+    liveUrl: "https://glowandgo-three.vercel.app/",
+    githubUrl: "https://github.com/kiganyamburu/glowandgo",
     image:
-      "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop",
+      "https://plus.unsplash.com/premium_photo-1682096433084-b68c0cf072b8?w=600&h=400&fit=crop",
     featured: false,
-    year: "2023",
+    year: "2026",
   },
   {
     title: "Cryptocurrency Tracker",
